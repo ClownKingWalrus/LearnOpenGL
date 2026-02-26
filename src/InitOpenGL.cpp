@@ -44,8 +44,104 @@ void InitOpenGL::processInput(GLFWwindow* window) {
     }
 }
 
+unsigned int InitOpenGL::CreateShader(const char* vertexShaderSource, const char* fragShaderSource) {
+    // Create Shader object
+    unsigned int vertexShader;
+    vertexShader = glCreateShader(GL_VERTEX_SHADER);
+
+    //attach shader source to shader object then compile
+    glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
+    glCompileShader(vertexShader);
+
+    // Check for compile errors
+    int success;
+    char infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
+    if (!success) {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<
+        infoLog << std::endl;
+    }
+
+    // Create Frag Shader object
+    unsigned int fragShader;
+    fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragShader, 1, &fragShaderSource, nullptr);
+    glCompileShader(fragShader);
+
+    // Check for compile errors
+    int successfrag;
+    char infoLogfrag[512];
+    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &successfrag);
+
+    if (!successfrag) {
+        glGetShaderInfoLog(fragShader, 512, NULL, infoLogfrag);
+        std::cout << "ERROR::SHADER::FRAG::COMPILATION_FAILED\n" <<
+        infoLogfrag << std::endl;
+    }
+
+    // Create Shader program
+    unsigned int shaderProgram;
+    shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragShader);
+    glLinkProgram(shaderProgram);
+
+    // Check for compile errors
+    int successShaderProgram;
+    char infoLogShaderProgram[512];
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &successShaderProgram);
+
+    if (!successShaderProgram) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLogShaderProgram);
+        std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" <<
+        infoLogShaderProgram << std::endl;
+    }
+    
+    // Delete old shaders as they are no longer needed
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragShader);
+
+    return shaderProgram;
+}
+
+//XYZ where Z is depth
 float InitOpenGL::verticesTriangle[9] = {
-        -0.5, -0.5, 0.0, //left point
-        0.5, -0.5, 0.0, //right point
-        0.0, 0.5, 0.0, //top point
+        -1, -0.5, 0.0, //left point
+        0.0, -0.5, 0.0, //right point
+        -0.5, 0.5, 0.0, //top point
 };
+
+float InitOpenGL::verticesTriangle2[9] = {
+        //triangle 2 Shift Right
+        0.0, 0.5, 0.0, //left point
+        1.0, 0.5, 0.0, //right point
+        0.5, -0.5, 0.0, //top point
+};
+
+float InitOpenGL::verticesTriangleTwo[18] = {
+        -1, -0.5, 0.0, //left point
+        0.0, -0.5, 0.0, //right point
+        -0.5, 0.5, 0.0, //top point
+
+        //triangle 2 Shift Right
+        0.0, 0.5, 0.0, //left point
+        1.0, 0.5, 0.0, //right point
+        0.5, -0.5, 0.0, //top point
+};
+
+float InitOpenGL::verticesRect[12] = {
+    //rectangle points   
+    0.5, 0.5, 0.0, //top right
+    0.5, -0.5, 0.0, //bottom right
+    -0.5, -0.5, 0.0, //bottom left
+    -0.5, 0.5, 0.0, //top left
+};
+
+unsigned int InitOpenGL::verticesRectIndices[6] = {
+    0, 1, 3, //first traingle
+    1, 2, 3, //second triangle
+};
+
+
