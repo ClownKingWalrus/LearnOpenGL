@@ -120,6 +120,14 @@ float InitOpenGL::verticesTriangle2[9] = {
         0.5, -0.5, 0.0, //top point
 };
 
+float InitOpenGL::verticesTriangle3FullPrismo[18] = {
+        //Triangle full prismo
+        //XYZ : RGB
+        0.5, -0.5, 0.0, 1.0, 0.0, 0.0, //bottom Right
+        -0.5, -0.5, 0.0, 0.0, 1.0, 0.0, //bot left
+        0.0, 0.5, 0.0, 0.0, 0.0, 1.0, //top middle
+};
+
 float InitOpenGL::verticesTriangleTwo[18] = {
         -1, -0.5, 0.0, //left point
         0.0, -0.5, 0.0, //right point

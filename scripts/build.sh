@@ -10,7 +10,7 @@ SRCPP=./src/*.cpp
 SRC=./src/*.c
 
 # Link Libs
-LIBS="-lglfw3 -lgdi32 -lopengl32 -luser32 -lshell32"
+LIBS="-lglfw3 -lgdi32 -lopengl32 -luser32 -lshell32 -lstdc++fs"
 
 # This is what the binarary it produces gets outputted
 OUT=./bin/my_program

@@ -23,6 +23,7 @@ class InitOpenGL {
     //create 3 points for a triangle
     static float verticesTriangle[9];
     static float verticesTriangle2[9];
+    static float verticesTriangle3FullPrismo[18];
     static float verticesTriangleTwo[18];
 
     //create a rectangle from two trangles
